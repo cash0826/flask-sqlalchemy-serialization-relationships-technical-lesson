@@ -16,45 +16,49 @@ db.init_app(app)
 def index():
     return '<h1>Zoo app</h1>'
 
+# Instructions:
+# Delete or comment out the response_body code for each route, and add a line to set response_body for each route to use the dump method
 
 @app.route('/animals/<int:id>')
 def animal_by_id(id):
     animal = Animal.query.filter(Animal.id == id).first()
-    response_body = f''
-    response_body += f'<ul>ID: {animal.id}</ul>'
-    response_body += f'<ul>Name: {animal.name}</ul>'
-    response_body += f'<ul>Species: {animal.species}</ul>'
-    response_body += f'<ul>Zookeeper: {animal.zookeeper.name}</ul>'
-    response_body += f'<ul>Enclosure: {animal.enclosure.environment}</ul>'
+    # response_body = f''
+    # response_body += f'<ul>ID: {animal.id}</ul>'
+    # response_body += f'<ul>Name: {animal.name}</ul>'
+    # response_body += f'<ul>Species: {animal.species}</ul>'
+    # response_body += f'<ul>Zookeeper: {animal.zookeeper.name}</ul>'
+    # response_body += f'<ul>Enclosure: {animal.enclosure.environment}</ul>'
 
+    response_body = AnimalSchema().dump(animal)
     return make_response(response_body)
-
 
 @app.route('/zookeepers/<int:id>')
 def zookeeper_by_id(id):
     zookeeper = Zookeeper.query.filter(Zookeeper.id == id).first()
-    response_body = f''
-    response_body += f'<ul>ID: {zookeeper.id}</ul>'
-    response_body += f'<ul>Name: {zookeeper.name}</ul>'
-    response_body += f'<ul>Birthday: {zookeeper.birthday}</ul>'
+    # response_body = f''
+    # response_body += f'<ul>ID: {zookeeper.id}</ul>'
+    # response_body += f'<ul>Name: {zookeeper.name}</ul>'
+    # response_body += f'<ul>Birthday: {zookeeper.birthday}</ul>'
 
-    for animal in zookeeper.animals:
-        response_body += f'<ul>Animal: {animal.name}</ul>'
+    # for animal in zookeeper.animals:
+    #     response_body += f'<ul>Animal: {animal.name}</ul>'
 
+    response_body = ZookeeperSchema().dump(zookeeper)
     return make_response(response_body)
 
 
 @app.route('/enclosures/<int:id>')
 def enclosure_by_id(id):
     enclosure = Enclosure.query.filter(Enclosure.id == id).first()
-    response_body = f''
-    response_body += f'<ul>ID: {enclosure.id}</ul>'
-    response_body += f'<ul>Environment: {enclosure.environment}</ul>'
-    response_body += f'<ul>Open to Visitors: {enclosure.open_to_visitors}</ul>'
+    # response_body = f''
+    # response_body += f'<ul>ID: {enclosure.id}</ul>'
+    # response_body += f'<ul>Environment: {enclosure.environment}</ul>'
+    # response_body += f'<ul>Open to Visitors: {enclosure.open_to_visitors}</ul>'
 
-    for animal in enclosure.animals:
-        response_body += f'<ul>Animal: {animal.name}</ul>'
-
+    # for animal in enclosure.animals:
+    #     response_body += f'<ul>Animal: {animal.name}</ul>'
+    
+    response_body = EnclosureSchema().dump(enclosure)
     return make_response(response_body)
 
 
